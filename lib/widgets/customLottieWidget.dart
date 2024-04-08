@@ -3,7 +3,7 @@ import 'package:lottie/lottie.dart';
 
 class CustomLottieWidget extends StatelessWidget {
   final String path;
-  const CustomLottieWidget({Key key, @required this.path}) : super(key: key);
+  const CustomLottieWidget({super.key, required this.path});
 
   @override
   Widget build(BuildContext context) {
