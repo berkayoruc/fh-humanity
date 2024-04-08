@@ -7,7 +7,7 @@ class CitySearchDelegate extends SearchDelegate {
     final theme = Theme.of(context);
     return theme.copyWith(
         textTheme: TextTheme(
-            bodyText1: TextStyle(
+            bodyLarge: TextStyle(
           color: Colors.white,
         )),
         textSelectionTheme: TextSelectionThemeData(
