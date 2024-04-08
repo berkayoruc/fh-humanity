@@ -1,5 +1,4 @@
 import 'dart:ui';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:humantiy/constants.dart';
@@ -23,8 +22,8 @@ class _SettingsState extends State<Settings> {
           context: context,
           barrierDismissible: false,
           builder: (BuildContext context) {
-            return WillPopScope(
-                onWillPop: () async => false,
+            return PopScope(
+                canPop: false,
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                   child: SimpleDialog(
@@ -52,7 +51,7 @@ class _SettingsState extends State<Settings> {
           });
     }
 
-    Future<bool> succesChange(String _title, String _desc) async {
+    Future<bool?> succesChange(String _title, String _desc) async {
       Navigator.pop(context);
       return Alert(
           type: AlertType.success,
@@ -74,7 +73,7 @@ class _SettingsState extends State<Settings> {
           ]).show();
     }
 
-    Future<bool> failedChange(String _title, String _desc) {
+    Future<bool?> failedChange(String _title, String _desc) {
       Navigator.pop(context);
       return Alert(
           type: AlertType.warning,
@@ -130,7 +129,6 @@ class _SettingsState extends State<Settings> {
       }
     }
 
-
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
@@ -157,7 +155,7 @@ class _SettingsState extends State<Settings> {
                           'Konumu Güncelle',
                           style: TextStyle(
                               color:
-                                  Theme.of(context).textTheme.bodyText1.color),
+                                  Theme.of(context).textTheme.bodyLarge?.color),
                         ),
                         trailing: Icon(Icons.keyboard_arrow_right),
                         onTap: () {
@@ -174,7 +172,7 @@ class _SettingsState extends State<Settings> {
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
-                    color: Theme.of(context).accentColor,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                 ),
                 SwitchListTile(
@@ -183,7 +181,7 @@ class _SettingsState extends State<Settings> {
                   title: Text(
                     'Koyu Tema',
                     style: TextStyle(
-                        color: Theme.of(context).textTheme.bodyText1.color),
+                        color: Theme.of(context).textTheme.bodyLarge?.color),
                   ),
                   onChanged: (isDarkModeEnabled) {
                     setState(() {
