@@ -1,15 +1,13 @@
 import 'dart:ui';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
-import 'package:flutter/rendering.dart';
 import 'package:hive/hive.dart';
 import 'package:humantiy/constants.dart';
 import 'package:humantiy/core/locator.dart';
 import 'package:humantiy/core/services/data_services.dart';
 import 'package:humantiy/core/services/location_services.dart';
 import 'package:shimmer/shimmer.dart';
+
 class Home extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => HomeState();
@@ -22,7 +20,13 @@ class HomeState extends State<Home> {
   List<String> locationDataContent = ['null', 'null', 'null', 'null', 'null'];
   bool isLoading = false;
   var current = 0;
-  final List<String> locationDataTitles = ['Hava Kalitesi:', 'Karbonmonoksit:', 'Pm2.5:', 'Pm10:', 'Güncellenme:'];
+  final List<String> locationDataTitles = [
+    'Hava Kalitesi:',
+    'Karbonmonoksit:',
+    'Pm2.5:',
+    'Pm10:',
+    'Güncellenme:'
+  ];
   List<dynamic> myLocationsData = [];
 
   // void test() async{
@@ -31,7 +35,7 @@ class HomeState extends State<Home> {
   //   print(tester.lat);
   // }
 
-  void sliderIndexChange(var index) async {
+  Future sliderIndexChange(var index) async {
     if (mounted) {
       setState(() {
         current = index;
@@ -42,7 +46,8 @@ class HomeState extends State<Home> {
       param1: myLocationsData[index][0].toString(),
       param2: myLocationsData[index][1].toString(),
     );
-    final airDataModel = await coordinateLocationModel.getCityDataFromCoordinate();
+    final airDataModel =
+        await coordinateLocationModel.getCityDataFromCoordinate();
     var time = airDataModel.time.toString();
     time = time.substring(0, time.length - 3);
     await Hive.openBox('myLocationsDb');
@@ -103,7 +108,8 @@ class HomeState extends State<Home> {
                             child: Container(
                               color: Colors.white,
                               height: size.height * 0.5, // 180
-                              child: sliderImageType(size, myLocationsData[index][3]),
+                              child: sliderImageType(
+                                  size, myLocationsData[index][3]),
                             ),
                           ),
                           Positioned(
@@ -114,25 +120,33 @@ class HomeState extends State<Home> {
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(8),
                                 gradient: LinearGradient(
-                                  colors: [Color.fromARGB(200, 0, 0, 0), Color.fromARGB(0, 0, 0, 0)],
+                                  colors: [
+                                    Color.fromARGB(200, 0, 0, 0),
+                                    Color.fromARGB(0, 0, 0, 0)
+                                  ],
                                   begin: Alignment.bottomCenter,
                                   end: Alignment.topCenter,
                                 ),
                               ),
-                              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 10.0, horizontal: 10.0),
                               child: Text(
                                 myLocationsData[index][2],
                                 textAlign: TextAlign.center,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
-                                style: TextStyle(color: Colors.white, fontSize: 14.0, fontWeight: FontWeight.w700),
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w700),
                               ),
                             ),
                           ),
                         ],
                       )),
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black.withOpacity(0.1), width: 1),
+                    border: Border.all(
+                        color: Colors.black.withOpacity(0.1), width: 1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
@@ -158,7 +172,9 @@ class HomeState extends State<Home> {
               margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: current == index ? Colors.grey : Colors.grey.withOpacity(0.6),
+                color: current == index
+                    ? Colors.grey
+                    : Colors.grey.withOpacity(0.6),
               ),
             );
           }).toList(),
@@ -191,7 +207,8 @@ class HomeState extends State<Home> {
                             locationDataTitles[index],
                             style: TextStyle(fontSize: 14),
                           ),
-                          Text(locationDataContent[index], style: TextStyle(fontSize: 14))
+                          Text(locationDataContent[index],
+                              style: TextStyle(fontSize: 14))
                         ],
                       ),
                     ),
@@ -221,28 +238,32 @@ class HomeState extends State<Home> {
                 ),
               ),
               duration: Duration(milliseconds: 200),
-              crossFadeState: isLoading || locationDataContent[3] == 'null' ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+              crossFadeState: isLoading || locationDataContent[3] == 'null'
+                  ? CrossFadeState.showSecond
+                  : CrossFadeState.showFirst,
             )));
   }
 
   Widget showLoading(BuildContext context) {
-    return WillPopScope(
-        onWillPop: () async => false,
+    return PopScope(
+        canPop: false,
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: SimpleDialog(backgroundColor: Colors.transparent, children: <Widget>[
-            Center(
-              child: Container(
-                child: Column(children: [
-                  CircularProgressIndicator(),
-                ]),
-              ),
-            )
-          ]),
+          child: SimpleDialog(
+              backgroundColor: Colors.transparent,
+              children: <Widget>[
+                Center(
+                  child: Container(
+                    child: Column(children: [
+                      CircularProgressIndicator(),
+                    ]),
+                  ),
+                )
+              ]),
         ));
   }
 
-  void checkCurrentLocation() async {
+  Future<void> checkCurrentLocation() async {
     await Hive.openBox('myLocationsDb');
     var box = await Hive.box('myLocationsDb');
 
@@ -253,10 +274,16 @@ class HomeState extends State<Home> {
           param1: position.latitude.toString(),
           param2: position.longitude.toString(),
         );
-        final airDataModel = await coordinateLocationModel.getCityDataFromCoordinate();
+        final airDataModel =
+            await coordinateLocationModel.getCityDataFromCoordinate();
         List<dynamic> tempAreas = await box.get('savedAreas') ?? [];
         tempAreas.isNotEmpty ? tempAreas.removeAt(0) : null;
-        tempAreas.insert(0, [position.latitude, position.longitude, airDataModel.name, airDataModel.aqi]);
+        tempAreas.insert(0, [
+          position.latitude,
+          position.longitude,
+          airDataModel.name,
+          airDataModel.aqi
+        ]);
         await box.put('savedAreas', tempAreas);
       }).catchError((error) {
         print(error);
@@ -303,7 +330,8 @@ class HomeState extends State<Home> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('$locationName adlı bölgeyi listenizden kaldırmak istediğinize emin misiniz?'),
+            title: Text(
+                '$locationName adlı bölgeyi listenizden kaldırmak istediğinize emin misiniz?'),
             actions: [
               TextButton(
                   onPressed: () {
@@ -353,7 +381,8 @@ class HomeState extends State<Home> {
                   child: Center(
                     child: TextButton(
                       child: Text('Kaldır'),
-                      onPressed: () => showDeleteCheck(myLocationsData[current][2]),
+                      onPressed: () =>
+                          showDeleteCheck(myLocationsData[current][2]),
                     ),
                   ),
                 )
