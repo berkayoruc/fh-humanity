@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:humantiy/screens/intro.dart';
@@ -34,7 +33,7 @@ class SplashPageState extends State<SplashPage> {
 
   @override
   void initState() {
-    SystemChrome.setEnabledSystemUIOverlays([]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     welcomeScreen();
     super.initState();
   }
@@ -53,7 +52,9 @@ class SplashPageState extends State<SplashPage> {
                 decoration: BoxDecoration(shape: BoxShape.circle),
                 child: Padding(
                     padding: EdgeInsets.all(8.0),
-                    child: CustomLottieWidget(path: 'air-pollution',)
+                    child: CustomLottieWidget(
+                      path: 'air-pollution',
+                    )
                     // CircleAvatar(
                     //   radius: 80,
                     //   backgroundColor: Colors.white,
