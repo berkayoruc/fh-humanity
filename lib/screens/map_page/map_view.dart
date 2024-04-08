@@ -1,12 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_map_marker_cluster/flutter_map_marker_cluster.dart';
 import 'package:hive/hive.dart';
 import 'package:humantiy/constants.dart';
 import 'package:humantiy/core/services/data_services.dart';
 import 'package:humantiy/models/air_data_model.dart';
-import 'package:latlong/latlong.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../core/locator.dart';
@@ -36,7 +32,7 @@ class MapViewState extends State<MapView> {
   var markerList = <Marker>[];
   var showDetails = false;
   var isLoading = false;
-  AirDataModel airData;
+  late AirDataModel airData;
 
   @override
   void initState() {
@@ -197,11 +193,11 @@ class MapViewState extends State<MapView> {
     );
   }
 
-  Future<void> _handleOnTap(LatLng latlng) async {
+  _handleOnTap(LatLng latlng) async {
     isLoading = true;
     showDetails = true;
     if (mounted) {
-      await setState(() {});
+      setState(() {});
     }
     airData =
         await _getData(latlng.latitude.toString(), latlng.longitude.toString());
@@ -216,7 +212,7 @@ class MapViewState extends State<MapView> {
     locationDataContent.insert(5, time);
     isLoading = false;
     if (mounted) {
-      await setState(() {});
+      setState(() {});
     }
   }
 
@@ -235,7 +231,7 @@ class MapViewState extends State<MapView> {
     if (aqi <= 50) {
       color = Colors.green;
     } else if (aqi <= 100) {
-      color = Colors.yellow[700];
+      color = Colors.yellow[700]!;
     } else if (aqi <= 150) {
       color = Colors.deepOrange;
     } else if (aqi <= 200) {
