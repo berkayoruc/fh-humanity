@@ -2,25 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:humantiy/screens/nav_bar/bottom_nav_bar.dart';
 import 'package:intro_slider/intro_slider.dart';
-import 'package:intro_slider/slide_object.dart';
 
 class IntroScreen extends StatefulWidget {
-  IntroScreen({Key key}) : super(key: key);
+  IntroScreen({super.key});
 
   @override
   _IntroScreenState createState() => _IntroScreenState();
 }
 
 class _IntroScreenState extends State<IntroScreen> {
-  List<Slide> slides = [];
+  List<ContentConfig> slides = [];
 
-  Function goToTab;
+  late Function goToTab;
 
   @override
   void initState() {
     super.initState();
     slides.add(
-      Slide(
+      ContentConfig(
         title: 'Konum Seçin',
         styleTitle: TextStyle(
             color: Colors.indigo[900],
@@ -38,7 +37,7 @@ class _IntroScreenState extends State<IntroScreen> {
       ),
     );
     slides.add(
-      Slide(
+      ContentConfig(
         title: 'Hava Kalitesini Görüntüleyin',
         styleTitle: TextStyle(
             color: Colors.indigo[900],
@@ -52,11 +51,11 @@ class _IntroScreenState extends State<IntroScreen> {
             fontSize: 20.0,
             fontStyle: FontStyle.italic,
             fontFamily: 'Raleway'),
-            pathImage: 'assets/images/51_100.png',
+        pathImage: 'assets/images/51_100.png',
       ),
     );
     slides.add(
-      Slide(
+      ContentConfig(
         title: 'Haritayı Kullanın',
         styleTitle: TextStyle(
             color: Colors.indigo[900],
@@ -118,14 +117,14 @@ class _IntroScreenState extends State<IntroScreen> {
             children: <Widget>[
               GestureDetector(
                   child: Image.asset(
-                currentSlide.pathImage,
+                currentSlide.pathImage!,
                 width: 200.0,
                 height: 200.0,
                 fit: BoxFit.contain,
               )),
               Container(
                 child: Text(
-                  currentSlide.title,
+                  currentSlide.title!,
                   style: currentSlide.styleTitle,
                   textAlign: TextAlign.center,
                 ),
@@ -133,7 +132,7 @@ class _IntroScreenState extends State<IntroScreen> {
               ),
               Container(
                 child: Text(
-                  currentSlide.description,
+                  currentSlide.description!,
                   style: currentSlide.styleDescription,
                   textAlign: TextAlign.center,
                   maxLines: 5,
@@ -149,22 +148,31 @@ class _IntroScreenState extends State<IntroScreen> {
     return tabs;
   }
 
-  void saveFirstLogin() async{
+  void saveFirstLogin() async {
     var box = await Hive.box('loginState');
-    await box.put('loginStatus',1);
-     await Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => BottomNavBarPage()), (route) => false);
+    await box.put('loginStatus', 1);
+    await Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => BottomNavBarPage()),
+        (route) => false);
   }
 
   @override
   Widget build(BuildContext context) {
     return IntroSlider(
       // List slides
-      slides: slides,
+      listContentConfig: slides,
 
       // Skip button
       renderSkipBtn: renderSkipBtn(),
-      colorSkipBtn: Colors.indigo[100],
-      highlightColorSkipBtn: Colors.indigo,
+      skipButtonStyle: ButtonStyle(
+        backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+          (states) => Colors.indigo[100],
+        ),
+        overlayColor: MaterialStateProperty.resolveWith<Color?>(
+          (states) => Colors.indigo,
+        ),
+      ),
 
       // Next button
       renderNextBtn: renderNextBtn(),
@@ -172,23 +180,29 @@ class _IntroScreenState extends State<IntroScreen> {
       // Done button
       renderDoneBtn: renderDoneBtn(),
       onDonePress: onDonePress,
-      colorDoneBtn: Colors.indigo[100],
-      highlightColorDoneBtn: Colors.indigo,
+      doneButtonStyle: ButtonStyle(
+        backgroundColor: MaterialStateProperty.resolveWith<Color?>(
+          (states) => Colors.indigo[100],
+        ),
+        overlayColor: MaterialStateProperty.resolveWith<Color?>(
+          (states) => Colors.indigo,
+        ),
+      ),
 
       // Dot indicator
-      colorDot: Colors.indigo,
-      sizeDot: 13.0,
+      indicatorConfig:
+          IndicatorConfig(colorIndicator: Colors.indigo, sizeIndicator: 13),
       // typeDotAnimation: dotSliderAnimation.SIZE_TRANSITION,
 
       // Tabs
       listCustomTabs: renderListCustomTabs(),
-      backgroundColorAllSlides: Colors.white,
+      backgroundColorAllTabs: Colors.white,
       refFuncGoToTab: (refFunc) {
         goToTab = refFunc;
       },
 
       // Show or hide status bar
-      shouldHideStatusBar: true,
+      // shouldHideStatusBar: true,
 
       // On tab change completed
       onTabChangeCompleted: onTabChangeCompleted,
