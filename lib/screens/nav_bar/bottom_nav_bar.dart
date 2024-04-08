@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:humantiy/screens/nav_bar/tab_navigator.dart';
@@ -22,7 +21,7 @@ class BottomNavBarPageState extends State<BottomNavBarPage> {
     return Offstage(
       offstage: currentPage != tabItem,
       child: TabNavigator(
-        navigatorKey: _navigatorKeys[tabItem],
+        navigatorKey: _navigatorKeys[tabItem]!,
         tabItem: tabItem,
       ),
     );
@@ -39,7 +38,8 @@ class BottomNavBarPageState extends State<BottomNavBarPage> {
 
   @override
   void initState() {
-    SystemChrome.setEnabledSystemUIOverlays ([SystemUiOverlay.bottom,SystemUiOverlay.top]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.bottom, SystemUiOverlay.top]);
     _selectTab(pageKeys[0], 0);
     super.initState();
   }

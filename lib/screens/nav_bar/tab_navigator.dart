@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:humantiy/screens/information.dart';
 import 'package:humantiy/screens/map_page/map_view.dart';
@@ -9,8 +8,8 @@ class TabNavigator extends StatefulWidget {
   final GlobalKey<NavigatorState> navigatorKey;
   final String tabItem;
 
-  const TabNavigator({Key key, this.navigatorKey, this.tabItem})
-      : super(key: key);
+  const TabNavigator(
+      {super.key, required this.navigatorKey, required this.tabItem});
 
   @override
   State<StatefulWidget> createState() => TabNavigatorState();
@@ -20,42 +19,48 @@ class TabNavigatorState extends State<TabNavigator> {
   @override
   Widget build(BuildContext context) {
     Widget child;
-    if (widget.tabItem == 'Ana Sayfa') {
-      child = Scaffold(
-          appBar: AppBar(
-            title: Text('Humantiy'),
-            actions: [
-              IconButton(
-                icon: Icon(
-                  Icons.info,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return Information();
-                      },
-                    ),
-                  );
-                },
-              )
-            ],
-          ),
-          body: Home());
-    } else if (widget.tabItem == 'Harita') {
-      child =Scaffold(
-          appBar: AppBar(
-            title: Text('Humantiy'),
-          ),
-          body: MapView());
-    } else if (widget.tabItem == 'Ayarlar') {
-      child = Scaffold(
-          appBar: AppBar(
-            title: Text('Humantiy'),
-          ),
-          body: Settings());
+    switch (widget.tabItem) {
+      case "Ana Sayfa":
+        child = Scaffold(
+            appBar: AppBar(
+              title: Text('Humantiy'),
+              actions: [
+                IconButton(
+                  icon: Icon(
+                    Icons.info,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return Information();
+                        },
+                      ),
+                    );
+                  },
+                )
+              ],
+            ),
+            body: Home());
+
+        break;
+      case "Harita":
+        child = Scaffold(
+            appBar: AppBar(
+              title: Text('Humantiy'),
+            ),
+            body: MapView());
+        break;
+      case "Ayarlar":
+        child = Scaffold(
+            appBar: AppBar(
+              title: Text('Humantiy'),
+            ),
+            body: Settings());
+      default:
+        child = CircularProgressIndicator();
     }
 
     return Container(
