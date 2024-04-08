@@ -8,18 +8,18 @@ class AirDataModel {
   var time;
   var aqi;
 
-  AirDataModel({
-    this.co,
-    this.pm25,
-    this.pm10,
-    this.name,
-    this.lat,
-    this.lng,
-    this.time,
-    this.aqi
-  });
+  AirDataModel(
+      {this.co,
+      this.pm25,
+      this.pm10,
+      this.name,
+      this.lat,
+      this.lng,
+      this.time,
+      this.aqi});
 
-  factory AirDataModel.fromSnapshots({Map<String, dynamic> airDataMap}) {
+  factory AirDataModel.fromSnapshots(
+      {required Map<String, dynamic> airDataMap}) {
     return AirDataModel(
       co: airDataMap['data']['iaqi']['co'] != null
           ? airDataMap['data']['iaqi']['co']['v']
@@ -30,11 +30,11 @@ class AirDataModel {
       pm10: airDataMap['data']['iaqi']['pm10'] != null
           ? airDataMap['data']['iaqi']['pm10']['v']
           : null,
-       name: airDataMap['data']['city']['name'],
-       lat: airDataMap['data']['city']['geo'][0],
-       lng: airDataMap['data']['city']['geo'][1],
-       time: airDataMap['data']['time']['s'],
-       aqi: airDataMap['data']['aqi'],
+      name: airDataMap['data']['city']['name'],
+      lat: airDataMap['data']['city']['geo'][0],
+      lng: airDataMap['data']['city']['geo'][1],
+      time: airDataMap['data']['time']['s'],
+      aqi: airDataMap['data']['aqi'],
     );
   }
 }
