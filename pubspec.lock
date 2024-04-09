@@ -144,6 +144,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  image:
+    dependency: transitive
+    description:
+      name: image
+      sha256: "4c68bfd5ae83e700b5204c1e74451e7bf3cf750e6843c6e158289cf56bda018e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.7"
   intro_slider:
     dependency: "direct main"
     description:
@@ -192,6 +200,33 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.0"
+  maplibre_gl:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: main
+      resolved-ref: ec5a29dea08e8c2fadf9c55bd5bc500ef5b2a685
+      url: "https://github.com/maplibre/flutter-maplibre-gl.git"
+    source: git
+    version: "0.18.0"
+  maplibre_gl_platform_interface:
+    dependency: transitive
+    description:
+      path: maplibre_gl_platform_interface
+      ref: main
+      resolved-ref: ec5a29dea08e8c2fadf9c55bd5bc500ef5b2a685
+      url: "https://github.com/maplibre/flutter-maplibre-gl.git"
+    source: git
+    version: "0.18.0"
+  maplibre_gl_web:
+    dependency: transitive
+    description:
+      path: maplibre_gl_web
+      ref: main
+      resolved-ref: ec5a29dea08e8c2fadf9c55bd5bc500ef5b2a685
+      url: "https://github.com/maplibre/flutter-maplibre-gl.git"
+    source: git
+    version: "0.18.0"
   matcher:
     dependency: transitive
     description:
@@ -280,6 +315,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.1"
+  petitparser:
+    dependency: transitive
+    description:
+      name: petitparser
+      sha256: c15605cd28af66339f8eb6fbe0e541bfe2d1b72d5825efc6598f3e0a31b9ad27
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.0.2"
   platform:
     dependency: transitive
     description:
@@ -421,6 +464,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
+  xml:
+    dependency: transitive
+    description:
+      name: xml
+      sha256: b015a8ad1c488f66851d762d3090a21c600e479dc75e68328c52774040cf9226
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.5.0"
 sdks:
   dart: ">=3.2.1 <4.0.0"
   flutter: ">=3.16.0"

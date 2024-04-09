@@ -4,7 +4,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:humantiy/core/locator.dart';
 import 'package:humantiy/screens/splash_page.dart';
 import 'package:humantiy/theme/app_state_notify.dart';
-import 'package:humantiy/theme/app_theme.dart';
+// import 'package:humantiy/theme/app_theme.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
@@ -22,7 +22,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   Future getShared() async {
     await Hive.openBox('theme');
     var box = await Hive.box('theme');
@@ -40,15 +39,16 @@ class _MyAppState extends State<MyApp> {
     getShared();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AppStateNotifier>(
       builder: (context, appState, child) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          theme: AppTheme.lightTheme,
+          // theme: AppTheme.lightTheme,
           // ThemeData(primarySwatch: Colors.blue),
-          darkTheme: AppTheme.darkTheme,
+          // darkTheme: AppTheme.darkTheme,
           // ThemeData(primarySwatch: Colors.blue),
           themeMode: appState.isDarkMode ? ThemeMode.dark : ThemeMode.light,
           home: SplashPage(),
