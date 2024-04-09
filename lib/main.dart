@@ -22,23 +22,23 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  Future getShared() async {
-    await Hive.openBox('theme');
-    var box = await Hive.box('theme');
-    var _themeColor = await box.get('darktheme');
+  // Future getShared() async {
+  //   await Hive.openBox('theme');
+  //   var box = await Hive.box('theme');
+  //   var _themeColor = await box.get('darktheme');
 
-    _themeColor != null
-        ? Provider.of<AppStateNotifier>(context, listen: false)
-            .updateTheme(_themeColor)
-        : Provider.of<AppStateNotifier>(context, listen: false)
-            .updateTheme(false);
-  }
+  //   _themeColor != null
+  //       ? Provider.of<AppStateNotifier>(context, listen: false)
+  //           .updateTheme(_themeColor)
+  //       : Provider.of<AppStateNotifier>(context, listen: false)
+  //           .updateTheme(false);
+  // }
 
-  @override
-  void initState() {
-    getShared();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   // getShared();
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class _MyAppState extends State<MyApp> {
           // ThemeData(primarySwatch: Colors.blue),
           // darkTheme: AppTheme.darkTheme,
           // ThemeData(primarySwatch: Colors.blue),
-          themeMode: appState.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+          // themeMode: appState.isDarkMode ? ThemeMode.dark : ThemeMode.light,
           home: SplashPage(),
         );
       },

@@ -246,30 +246,35 @@ class HomeState extends State<Home> {
 
   Widget showLoading(BuildContext context) {
     return PopScope(
-        canPop: false,
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: SimpleDialog(
-              backgroundColor: Colors.transparent,
-              children: <Widget>[
-                Center(
-                  child: Container(
-                    child: Column(children: [
-                      CircularProgressIndicator(),
-                    ]),
-                  ),
-                )
-              ]),
-        ));
+      canPop: false,
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: SimpleDialog(
+          backgroundColor: Colors.transparent,
+          children: <Widget>[
+            Center(
+              child: Container(
+                child: Column(
+                  children: [
+                    CircularProgressIndicator(),
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 
   Future<void> checkCurrentLocation() async {
     await Hive.openBox('myLocationsDb');
     var box = await Hive.box('myLocationsDb');
-
-    if (box.get('savedAreas') == null) {
+    var getSavedAreas = await box.get('savedAreas');
+    if (getSavedAreas == null) {
       var locationServices = getIt<LocationServices>();
       await locationServices.getPosition().then((position) async {
+        print("asdasd");
         var coordinateLocationModel = getIt<DataServicesFromCoordinate>(
           param1: position.latitude.toString(),
           param2: position.longitude.toString(),
@@ -289,11 +294,10 @@ class HomeState extends State<Home> {
         print(error);
       });
     }
-    if (mounted) {
-      setState(() {
-        isGetCurrentLocation = true;
-      });
-    }
+    print("berkau");
+    setState(() {
+      isGetCurrentLocation = true;
+    });
   }
 
   void loadDefaults() async {
@@ -301,11 +305,9 @@ class HomeState extends State<Home> {
     await Hive.openBox('myLocationsDb');
     var box = await Hive.box('myLocationsDb');
     var getSavedAreas = await box.get('savedAreas');
-    if (mounted) {
-      setState(() {
-        myLocationsData = getSavedAreas;
-      });
-    }
+    setState(() {
+      myLocationsData = getSavedAreas;
+    });
     await sliderIndexChange(0);
   }
 
@@ -353,13 +355,11 @@ class HomeState extends State<Home> {
 
   void setChanges() {
     if (isSavedNewArea) {
-      if (mounted) {
-        setState(() {
-          current = 0;
-          isSavedNewArea = false;
-          loadDefaults();
-        });
-      }
+      setState(() {
+        current = 0;
+        isSavedNewArea = false;
+        loadDefaults();
+      });
     }
   }
 
@@ -390,5 +390,20 @@ class HomeState extends State<Home> {
             ),
           )
         : showLoading(context);
+    // return Scaffold(
+    //   appBar: AppBar(title: Text("Humanity")),
+    //   body: SingleChildScrollView(
+    //     child: Column(
+    //       children: [
+    //         Container(
+    //           child: Text("berkay"),
+    //         ),
+    //         Container(
+    //           child: Text("furakn"),
+    //         )
+    //       ],
+    //     ),
+    //   ),
+    // );
   }
 }
