@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
 import 'package:humantiy/screens/intro.dart';
-import 'package:humantiy/screens/nav_bar/bottom_nav_bar.dart';
 import 'package:humantiy/widgets/customLottieWidget.dart';
+
+import 'bottom_navigation_bar.dart';
 
 class SplashPage extends StatefulWidget {
   @override
@@ -20,7 +21,7 @@ class SplashPageState extends State<SplashPage> {
       if (status == 1) {
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => BottomNavBarPage()),
+            MaterialPageRoute(builder: (context) => BottomNavigationBarPage()),
             (route) => false);
       } else {
         Navigator.pushAndRemoveUntil(

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:humantiy/screens/nav_bar/bottom_nav_bar.dart';
 import 'package:intro_slider/intro_slider.dart';
+
+import 'bottom_navigation_bar.dart';
 
 class IntroScreen extends StatefulWidget {
   IntroScreen({super.key});
@@ -153,7 +154,7 @@ class _IntroScreenState extends State<IntroScreen> {
     await box.put('loginStatus', 1);
     await Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => BottomNavBarPage()),
+        MaterialPageRoute(builder: (context) => BottomNavigationBarPage()),
         (route) => false);
   }
 
